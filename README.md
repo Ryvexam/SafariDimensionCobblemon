@@ -28,8 +28,8 @@ Place these jars in your `mods` folder:
 
 ## Configuration
 
-Config file:
-`config/safari-config.json`
+World config file:
+`<world>/safari-config.json`
 
 Default values:
 ```json
