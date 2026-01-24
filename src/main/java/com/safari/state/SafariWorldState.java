@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Random;
 
 public class SafariWorldState {
@@ -17,9 +15,11 @@ public class SafariWorldState {
     private static final File STATE_FILE = FabricLoader.getInstance().getConfigDir().resolve("safari-state.json").toFile();
 
     public long currentDailySeed;
-    public String lastResetDate; // YYYY-MM-DD
     public int centerX = 0;
     public int centerZ = 0;
+    public int spawnX = 0;
+    public int spawnY = 160;
+    public int spawnZ = 0;
 
     public static SafariWorldState get() {
         if (INSTANCE == null) {
@@ -53,14 +53,8 @@ public class SafariWorldState {
 
     public void resetDailySeed() {
         this.currentDailySeed = new Random().nextLong();
-        this.lastResetDate = LocalDate.now(ZoneId.of(com.safari.config.SafariConfig.get().resetTimezone)).toString();
         this.centerX = 0;
         this.centerZ = 0;
         save();
-    }
-    
-    public boolean needsReset() {
-        String today = LocalDate.now(ZoneId.of(com.safari.config.SafariConfig.get().resetTimezone)).toString();
-        return !today.equals(lastResetDate);
     }
 }

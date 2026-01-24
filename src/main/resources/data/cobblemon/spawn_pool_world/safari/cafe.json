@@ -1,0 +1,83 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "cafe_fuecoco",
+            "pokemon": "cafe_fuecoco",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "minSkyLight": 0,
+                "maxSkyLight": 15,
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "cafe_litten",
+            "pokemon": "cafe_litten",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "minSkyLight": 0,
+                "maxSkyLight": 15,
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "cafe_raichu_alolan",
+            "pokemon": "cafe_raichu_alolan",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "minSkyLight": 0,
+                "maxSkyLight": 15,
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "cafe_sprigatito",
+            "pokemon": "cafe_sprigatito",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "minSkyLight": 0,
+                "maxSkyLight": 15,
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,669 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "onix-1",
+            "pokemon": "onix",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "quagsire-1",
+            "pokemon": "quagsire",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "abra-1",
+            "pokemon": "abra",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 3.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "smeargle-1",
+            "pokemon": "smeargle",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "magmar-1",
+            "pokemon": "magmar",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "mrmime-1",
+            "pokemon": "mrmime",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 7.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "farfetchd-1",
+            "pokemon": "farfetchd",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "electabuzz-1",
+            "pokemon": "electabuzz",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "ralts-1",
+            "pokemon": "ralts",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "rhyhorn-1",
+            "pokemon": "rhyhorn",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "pinsir-1",
+            "pokemon": "pinsir",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "omanyte-1",
+            "pokemon": "omanyte",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 1.8,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "omastar-1",
+            "pokemon": "omastar",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "kabuto-1",
+            "pokemon": "kabuto",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 1.8,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "kabutops-1",
+            "pokemon": "kabutops",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "natu-1",
+            "pokemon": "natu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 3.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "xatu-1",
+            "pokemon": "xatu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.6,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "shuckle-1",
+            "pokemon": "shuckle",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "aron-1",
+            "pokemon": "aron",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "lairon-1",
+            "pokemon": "lairon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 1.8,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "luxio-1",
+            "pokemon": "luxio",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 5.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "luxray-1",
+            "pokemon": "luxray",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.8,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "riolu-1",
+            "pokemon": "riolu",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 1.8,
+            "condition": {
+                "timeRange": "night",
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "lucario-1",
+            "pokemon": "lucario",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "timeRange": "night",
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "skrelp-1",
+            "pokemon": "skrelp",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "skrelp-1",
+            "pokemon": "skrelp",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "dragalge-1",
+            "pokemon": "dragalge",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "dragalge-1",
+            "pokemon": "dragalge",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.3,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "applin-1",
+            "pokemon": "applin",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 6.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "cufant-1",
+            "pokemon": "cufant",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 6.0,
+            "condition": {
+                "timeRange": "night",
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "absol-1",
+            "pokemon": "absol",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 9.0,
+            "condition": {
+                "timeRange": "night",
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "tropius-1",
+            "pokemon": "tropius",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 6.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "shellos-1",
+            "pokemon": "shellos",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 6.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+                ]
+            }
+        },
+        {
+            "id": "shellos-west",
+            "pokemon": "shellos west=true",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 5.4,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+                ]
+            }
+        },
+        {
+            "id": "gastrodon-1",
+            "pokemon": "gastrodon",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 1.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+                ]
+            }
+        },
+        {
+            "id": "gastrodon-west",
+            "pokemon": "gastrodon west=true",
+            "presets": [
+                "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 0.8,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ],
+                "neededNearbyBlocks": [
+                    "minecraft:water"
+                ]
+            }
+        },
+        {
+            "id": "finizen-1",
+            "pokemon": "finizen",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 3.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "finizen-1",
+            "pokemon": "finizen",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 3.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        }
+    ]
+}

@@ -40,6 +40,21 @@ public class SafariEconomy {
             return false;
         }
     }
+
+    public static int getBalance(ServerPlayerEntity player) {
+        try {
+            Object manager = getManager();
+            if (manager == null) return 0;
+
+            Method getBal = manager.getClass().getMethod("getBalance", java.util.UUID.class);
+            BigDecimal current = (BigDecimal) getBal.invoke(manager, player.getUuid());
+            if (current == null) return 0;
+            return current.intValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
     
     private static Object getManager() {
         try {

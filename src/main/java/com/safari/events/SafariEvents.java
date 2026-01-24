@@ -7,6 +7,7 @@ import com.safari.world.SafariDimension;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -42,6 +43,9 @@ public class SafariEvents {
                                 pokemonEntity.getPokemon().setLevel(level);
                                 pokemonEntity.addCommandTag("safari_level_set");
                             }
+                            if (shouldCullForStarterBoost(world, pokemonEntity)) {
+                                entity.discard();
+                            }
                         }
                         return;
                     }
@@ -56,7 +60,7 @@ public class SafariEvents {
         // 2. Block Breaking
         PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
             if (isInSafari(player)) {
-                if (!player.hasPermissionLevel(2)) {
+                if (!player.isCreative()) {
                     player.sendMessage(Text.of("§cYou cannot break blocks in the Safari!"), true);
                     return false;
                 }
@@ -86,20 +90,45 @@ public class SafariEvents {
 
             // Block placing in safari
             if (isInSafari(player)) {
-                if (!player.hasPermissionLevel(2)) {
+                if (!player.isCreative()) {
                     return ActionResult.FAIL;
                 }
             }
             return ActionResult.PASS;
         });
 
+        // 3b. Block non-safari balls in safari
+        UseItemCallback.EVENT.register((player, world, hand) -> {
+            var stack = player.getStackInHand(hand);
+            if (!isInSafari(player)) {
+                return net.minecraft.util.TypedActionResult.pass(stack);
+            }
+            if (stack == null || stack.isEmpty()) {
+                return net.minecraft.util.TypedActionResult.pass(stack);
+            }
+            var itemId = Registries.ITEM.getId(stack.getItem());
+            if (itemId == null) {
+                return net.minecraft.util.TypedActionResult.pass(stack);
+            }
+            if ("safari".equals(itemId.getNamespace())) {
+                return net.minecraft.util.TypedActionResult.pass(stack);
+            }
+            if ("cobblemon".equals(itemId.getNamespace()) && itemId.getPath().contains("ball")) {
+                player.sendMessage(Text.of("§cOnly Safari Balls can be used here."), true);
+                return net.minecraft.util.TypedActionResult.fail(stack);
+            }
+            return net.minecraft.util.TypedActionResult.pass(stack);
+        });
+
         // 4. Logout Handling
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             if (SafariSessionManager.isInSession(handler.getPlayer())) {
-                 if (SafariConfig.get().logoutClearInventory) {
-                     SafariSessionManager.endSession(handler.getPlayer());
-                 }
+                SafariSessionManager.pauseSession(handler.getPlayer());
             }
+        });
+
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            SafariSessionManager.resumeSession(handler.getPlayer());
         });
 
         // 5. Prevent attacking entities
@@ -109,6 +138,27 @@ public class SafariEvents {
             }
             return ActionResult.PASS;
         });
+    }
+
+    private static boolean shouldCullForStarterBoost(net.minecraft.server.world.ServerWorld world, PokemonEntity pokemonEntity) {
+        int radius = Math.max(0, SafariConfig.get().starterBoostRadius);
+        double chance = SafariConfig.get().starterCullChance;
+        if (radius <= 0 || chance <= 0.0) return false;
+
+        int spawnX = com.safari.state.SafariWorldState.get().spawnX;
+        int spawnZ = com.safari.state.SafariWorldState.get().spawnZ;
+        BlockPos pos = pokemonEntity.getBlockPos();
+        int dx = pos.getX() - spawnX;
+        int dz = pos.getZ() - spawnZ;
+        if ((dx * dx + dz * dz) > radius * radius) return false;
+
+        String species = pokemonEntity.getPokemon().getSpecies().getName().toString().toLowerCase();
+        boolean isStarter = SafariConfig.get().starterSpecies.stream().anyMatch(entry -> {
+            String normalized = entry.toLowerCase();
+            return species.equals(normalized) || species.endsWith(":" + normalized);
+        });
+        if (isStarter) return false;
+        return world.random.nextDouble() < chance;
     }
 
     private static boolean isInSafari(PlayerEntity player) {

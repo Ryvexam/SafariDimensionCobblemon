@@ -4,8 +4,8 @@
     "type": "safari:safari_noise",
     "settings": "minecraft:overworld",
     "biome_source": {
-      "type": "minecraft:multi_noise",
-      "preset": "minecraft:overworld"
+      "type": "minecraft:fixed",
+      "biome": "safari:safari_biome"
     }
   }
 }

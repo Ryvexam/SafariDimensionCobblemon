@@ -3,7 +3,7 @@
   "id": "safari",
   "version": "${version}",
   "name": "Safari Dimension",
-  "description": "A daily resetting Safari dimension for Cobblemon.",
+  "description": "A Safari dimension with portal access and custom rules for Cobblemon.",
   "authors": [
     "Ryvexam"
   ],
@@ -16,6 +16,9 @@
   "entrypoints": {
     "main": [
       "com.safari.SafariMod"
+    ],
+    "client": [
+      "com.safari.client.SafariClientMod"
     ]
   },
   "mixins": [

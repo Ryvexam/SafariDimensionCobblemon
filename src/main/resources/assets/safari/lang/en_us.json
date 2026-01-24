@@ -1,7 +1,12 @@
 {
   "item.safari.safari_ball": "Safari Ball",
+  "item.safari.ticket_5": "Safari Ticket (+5 min)",
+  "item.safari.ticket_15": "Safari Ticket (+15 min)",
+  "item.safari.ticket_30": "Safari Ticket (+30 min)",
+  "item.safari.safari_npc_spawn_egg": "Safari Guide Spawn Egg",
   "itemGroup.safari.item_group": "Safari Dimension",
   "block.safari.safari_portal_frame": "Safari Portal Frame",
   "block.safari.safari_portal": "Safari Portal",
-  "message.safari.no_send_out": "You cannot send out Pokémon in the Safari Zone."
+  "message.safari.no_send_out": "You cannot send out Pokémon in the Safari Zone.",
+  "entity.safari.safari_npc": "Safari Guide"
 }

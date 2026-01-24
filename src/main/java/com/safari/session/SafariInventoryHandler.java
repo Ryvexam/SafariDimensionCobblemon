@@ -86,4 +86,18 @@ public class SafariInventoryHandler {
         balls.setCount(ballCount);
         player.getInventory().insertStack(balls);
     }
+
+    public static void removeSafariBalls(ServerPlayerEntity player) {
+        Identifier safariBallId = Identifier.of("safari", "safari_ball");
+
+        var inv = player.getInventory();
+        for (int i = 0; i < inv.size(); i++) {
+            ItemStack stack = inv.getStack(i);
+            if (stack.isEmpty()) continue;
+            Identifier stackId = Registries.ITEM.getId(stack.getItem());
+            if (safariBallId.equals(stackId)) {
+                inv.setStack(i, ItemStack.EMPTY);
+            }
+        }
+    }
 }

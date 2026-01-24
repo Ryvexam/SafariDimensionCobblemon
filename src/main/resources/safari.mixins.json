@@ -3,6 +3,7 @@
   "package": "com.safari.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MixinLivingEntityDamage",
     "MixinPokeBallCaptureCalculatedEvent",
     "MixinSendOutPokemonHandler"
   ],

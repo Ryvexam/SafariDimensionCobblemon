@@ -1,15 +1,19 @@
 # Safari Dimension (Cobblemon)
 
-Daily‑resetting Safari dimension for Cobblemon 1.7.1 (MC 1.21.1).
+Dedicated Safari dimension for Cobblemon 1.7.1 (MC 1.21.1).
 
 ## Features
 
-- Custom Safari dimension with daily seed rotation.
-- Automatic reset at midnight (Europe/Paris) with evacuation + folder wipe.
+- Custom Safari biome (sparse jungle style).
 - Nether‑style portal frame (custom block) + flint & steel ignition.
 - Safari Ball item with Cobblemon throw physics and sounds.
 - No send‑out inside Safari (prevents battles).
-- Spawn structure at (0,0) in the sky every reset.
+- No damage + no block breaking/placing inside Safari (creative only for building).
+- Only Safari Balls can be used in Safari.
+- Safari Guide NPC with shop for balls and time tickets, auto-spawns near (0,0).
+- Session resumes on reconnect with remaining time.
+- Entry warning title reminds you time is lost on exit.
+- Shop UI shows your Pokédollar balance and 16/32/64 ball bundles.
 - World border 2000x2000 centered at (0,0).
 
 ## Commands
@@ -17,9 +21,11 @@ Daily‑resetting Safari dimension for Cobblemon 1.7.1 (MC 1.21.1).
 - `/safari enter`
 - `/safari leave`
 - `/safari info`
-- `/safari buy balls 5`
-- `/safari buy balls 10`
-- `/safari reset` (admin)
+- `/safari buy balls 16`
+- `/safari buy balls 32`
+- `/safari buy balls 64`
+- `/safari buy time <minutes>`
+- `/safari buy ticket <minutes>`
 - `/safari reload` (admin)
 
 ## Config
@@ -30,8 +36,9 @@ World‑specific config:
 Key fields:
 - `commonCatchRate`, `uncommonCatchRate`, `rareCatchRate`
 - `safariSpawnY`, `safariSpawnOffsetY`
-- `spawnStructureId`
 - `safariMinLevel`, `safariMaxLevel`
+- `pack16BallsPrice`, `pack32BallsPrice`, `pack64BallsPrice`
+- `timePurchaseMinutes`, `timePurchasePrice`
 
 ## Dependencies
 

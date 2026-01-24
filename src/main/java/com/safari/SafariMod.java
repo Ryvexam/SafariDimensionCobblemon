@@ -25,6 +25,7 @@ public class SafariMod implements ModInitializer {
                     server.getRegistryManager().getOptionalWrapper(RegistryKeys.NOISE_PARAMETERS).orElseThrow()
             );
             com.safari.session.SafariSessionManager.setServer(server);
+            com.safari.state.SafariWorldState.load();
         });
         
         // 2. Init Session Manager
@@ -40,6 +41,9 @@ public class SafariMod implements ModInitializer {
         // 5. Register Blocks & Items
         com.safari.block.SafariBlocks.registerModBlocks();
         com.safari.item.ModItems.registerModItems();
+
+        // 5b. Register Entities
+        com.safari.entity.SafariEntities.registerAttributes();
 
         // 6. Register Chunk Generator Codec
         Registry.register(Registries.CHUNK_GENERATOR, Identifier.of(MOD_ID, "safari_noise"), com.safari.world.SafariChunkGenerator.CODEC);

@@ -1,0 +1,67 @@
+{
+    "enabled": true,
+    "neededInstalledMods": [],
+    "neededUninstalledMods": [],
+    "spawns": [
+        {
+            "id": "eevee_umbreon_super_blood_moon",
+            "pokemon": "umbreon blood_moon",
+            "presets": [
+              "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.9,
+            "condition": {
+              "minSkyLight": 0,
+              "maxSkyLight": 15,
+              "timeRange": "night",
+              "biomes": [
+                "safari:safari_biome"
+              ]
+            }
+        },
+        {
+            "id": "eevee_flareon_super_blue_moon",
+            "pokemon": "flareon blue_moon",
+            "presets": [
+              "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.9,
+            "condition": {
+              "minSkyLight": 0,
+              "maxSkyLight": 15,
+              "timeRange": "night",
+              "biomes": [
+                "safari:safari_biome"
+              ]
+            }
+        },
+        {
+            "id": "eevee_leafeon_super_harvest_moon",
+            "pokemon": "leafeon harvest_moon",
+            "presets": [
+              "natural"
+            ],
+            "type": "pokemon",
+            "context": "grounded",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 0.9,
+            "condition": {
+              "minSkyLight": 0,
+              "maxSkyLight": 15,
+              "timeRange": "night",
+              "biomes": [
+                "safari:safari_biome"
+              ]
+            }
+        }
+    ]
+}
