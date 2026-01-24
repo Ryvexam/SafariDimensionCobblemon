@@ -21,7 +21,14 @@ public final class SafariEntities {
                     .trackedUpdateRate(2)
                     .build()
     );
-
+    public static final EntityType<SafariPortalNpcEntity> SAFARI_PORTAL_NPC = Registry.register(
+        Registries.ENTITY_TYPE,
+        new Identifier(SafariMod.MOD_ID, "safari_portal_npc"),
+        EntityType.Builder.create(SafariPortalNpcEntity::new, SpawnGroup.CREATURE)
+            .dimensions(0.6f, 1.8f)
+            .maxTrackingRange(48)
+            .build()
+    );
     private SafariEntities() {
     }
 
@@ -32,5 +39,6 @@ public final class SafariEntities {
     public static void registerAttributes() {
         DefaultAttributeContainer attributes = SafariNpcEntity.createAttributes();
         FabricDefaultAttributeRegistry.register(SAFARI_NPC, attributes);
+        FabricDefaultAttributeRegistry.register(SAFARI_PORTAL_NPC, SafariPortalNpcEntity.createNpcAttributes());
     }
 }

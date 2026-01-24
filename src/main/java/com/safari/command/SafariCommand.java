@@ -58,7 +58,13 @@ public class SafariCommand {
                 ctx.getSource().sendMessage(Text.of("§cYou are already in a Safari session!"));
                 return 0;
             }
-            
+
+            // Check if player has free inventory slot for Safari Balls
+            if (player.getInventory().getEmptySlot() == -1) {
+                ctx.getSource().sendMessage(Text.of("§cYour inventory is full! You need 1 slot for Safari Balls before entering Safari."));
+                return 0;
+            }
+
             int price = SafariConfig.get().entrancePrice;
             if (!SafariEconomy.deduct(player, price)) {
                 ctx.getSource().sendMessage(Text.of("§cYou need " + price + " Pokédollars to enter!"));

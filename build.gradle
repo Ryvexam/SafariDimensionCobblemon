@@ -27,7 +27,7 @@ dependencies {
     // We treat them as compileOnly + runtimeOnly to ensure they are on classpath but not shaded
     // Note: In a dev environment, "modImplementation files()" often works best
     modImplementation files("libs/Abes-Hutts-Cobblemon-1.21.1-1.7.1-1.0.1.jar")
-    modImplementation files("libs/cobblemon-economy-0.0.2.jar")
+    modImplementation files("libs/cobblemon-economy-0.0.10.jar")
 }
 
 processResources {
