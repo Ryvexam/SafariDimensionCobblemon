@@ -9,6 +9,8 @@
 - Add configurable entry title text and timing.
 - Add biome/dimension language keys for minimap and F3 display.
 - Add ticket, shop, and action bar localization keys.
+- Ensure portal entry uses the same checks as `/safari enter`.
+- End Safari sessions immediately on player death.
 
 ## 0.0.5
 - Initial public build.

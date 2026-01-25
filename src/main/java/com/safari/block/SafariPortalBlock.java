@@ -23,8 +23,7 @@ public class SafariPortalBlock extends NetherPortalBlock {
         // Prevent portal usage inside Safari
         if (world.getRegistryKey().equals(SafariDimension.SAFARI_DIM_KEY)) return;
 
-        if (!SafariSessionManager.isInSession(player)) {
-            SafariSessionManager.startSession(player);
+        if (SafariSessionManager.tryStartSession(player, true)) {
             player.setPortalCooldown(60);
         }
     }

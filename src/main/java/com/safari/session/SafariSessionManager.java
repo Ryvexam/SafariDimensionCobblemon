@@ -3,6 +3,7 @@ package com.safari.session;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.safari.config.SafariConfig;
+import com.safari.economy.SafariEconomy;
 import com.safari.state.SafariWorldState;
 import com.safari.world.SafariDimension;
 import com.safari.world.SafariWorldManager;
@@ -13,6 +14,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -68,6 +70,37 @@ public class SafariSessionManager {
 
     public static void init() {
         ServerTickEvents.END_SERVER_TICK.register(server -> tick());
+    }
+
+    public static boolean tryStartSession(ServerPlayerEntity player, boolean chargeEntry) {
+        if (isInSession(player)) {
+            player.sendMessage(Text.translatable("message.safari.already_in_session").formatted(Formatting.RED), false);
+            return false;
+        }
+
+        if (player.getInventory().getEmptySlot() == -1) {
+            player.sendMessage(Text.translatable("message.safari.inventory_full").formatted(Formatting.RED), false);
+            return false;
+        }
+
+        if (chargeEntry) {
+            int price = SafariConfig.get().entrancePrice;
+            boolean paid = SafariEconomy.deduct(player, price);
+            com.safari.SafariMod.LOGGER.info(
+                    "Safari entry payment: player={}, price={}, success={}",
+                    player.getName().getString(),
+                    price,
+                    paid
+            );
+            if (!paid) {
+                player.sendMessage(Text.translatable("message.safari.need_money_entry", price).formatted(Formatting.RED), false);
+                return false;
+            }
+            player.sendMessage(Text.translatable("message.safari.paid_entry", price).formatted(Formatting.GREEN), false);
+        }
+
+        startSession(player);
+        return true;
     }
 
     public static void startSession(ServerPlayerEntity player) {
@@ -174,6 +207,14 @@ public class SafariSessionManager {
         }
     }
 
+    public static void endSessionOnDeath(ServerPlayerEntity player) {
+        SafariSession session = activeSessions.remove(player.getUuid());
+        pausedSessions.remove(player.getUuid());
+        if (session != null) {
+            SafariInventoryHandler.removeSafariBalls(player);
+        }
+    }
+
     public static void pauseSession(ServerPlayerEntity player) {
         SafariSession session = activeSessions.remove(player.getUuid());
         if (session == null) {
@@ -243,7 +284,7 @@ public class SafariSessionManager {
                 long seconds = session.getTicksRemaining() / 20;
                 long mins = seconds / 60;
                 long secs = seconds % 60;
-                Text timeText = Text.translatable("message.safari.time_remaining", mins, secs);
+                MutableText timeText = Text.translatable("message.safari.time_remaining", mins, secs);
                 timeText = timeText.formatted(mins < 5 ? Formatting.RED : Formatting.YELLOW);
                 session.getPlayer().sendMessage(timeText, true);
                 if (seconds > 0 && seconds <= 10) {

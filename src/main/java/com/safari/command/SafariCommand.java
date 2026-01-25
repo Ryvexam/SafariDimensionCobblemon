@@ -55,33 +55,7 @@ public class SafariCommand {
     private static int enter(CommandContext<ServerCommandSource> ctx) {
         try {
             ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
-            if (SafariSessionManager.isInSession(player)) {
-                ctx.getSource().sendMessage(Text.translatable("message.safari.already_in_session").formatted(Formatting.RED));
-                return 0;
-            }
-
-            // Check if player has free inventory slot for Safari Balls
-            if (player.getInventory().getEmptySlot() == -1) {
-                ctx.getSource().sendMessage(Text.translatable("message.safari.inventory_full").formatted(Formatting.RED));
-                return 0;
-            }
-
-            int price = SafariConfig.get().entrancePrice;
-            boolean paid = SafariEconomy.deduct(player, price);
-            com.safari.SafariMod.LOGGER.info(
-                    "Safari entry payment: player={}, price={}, success={}",
-                    player.getName().getString(),
-                    price,
-                    paid
-            );
-            if (!paid) {
-                ctx.getSource().sendMessage(Text.translatable("message.safari.need_money_entry", price).formatted(Formatting.RED));
-                return 0;
-            }
-            
-            ctx.getSource().sendMessage(Text.translatable("message.safari.paid_entry", price).formatted(Formatting.GREEN));
-            SafariSessionManager.startSession(player);
-            return 1;
+            return SafariSessionManager.tryStartSession(player, true) ? 1 : 0;
         } catch (Exception e) {
             return 0;
         }
