@@ -17,6 +17,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class SafariShopScreenHandler extends ScreenHandler {
         int price = getPrice(new ShopItem(item, count));
         if (price > 0) {
             java.util.List<Text> lore = new java.util.ArrayList<>();
-            lore.add(Text.of("§7Price: §e" + price + " Pokédollars"));
+            lore.add(Text.translatable("message.safari.price", price).formatted(Formatting.GRAY));
             stack.set(DataComponentTypes.LORE, new net.minecraft.component.type.LoreComponent(lore));
         }
         inventory.setStack(slot, stack);
@@ -88,13 +89,13 @@ public class SafariShopScreenHandler extends ScreenHandler {
         }
 
         if (!SafariSessionManager.isInSession(serverPlayer)) {
-            player.sendMessage(Text.of("§cYou must be in a Safari session to buy items."), false);
+            player.sendMessage(Text.translatable("message.safari.must_be_in_session_buy").formatted(Formatting.RED), false);
             return;
         }
 
         int price = getPrice(item);
         if (!SafariEconomy.deduct(serverPlayer, price)) {
-            player.sendMessage(Text.of("§cYou need " + price + " Pokédollars to buy this."), false);
+            player.sendMessage(Text.translatable("message.safari.need_money_buy", price).formatted(Formatting.RED), false);
             return;
         }
 
@@ -112,7 +113,7 @@ public class SafariShopScreenHandler extends ScreenHandler {
             int price = getPrice(entry.getValue());
             if (price > 0) {
                 java.util.List<Text> lore = new java.util.ArrayList<>();
-                lore.add(Text.of("§7Price: §e" + price + " Pokédollars"));
+                lore.add(Text.translatable("message.safari.price", price).formatted(Formatting.GRAY));
                 stack.set(DataComponentTypes.LORE, new net.minecraft.component.type.LoreComponent(lore));
             }
             inventory.setStack(entry.getKey(), stack);
@@ -127,7 +128,7 @@ public class SafariShopScreenHandler extends ScreenHandler {
 
         int balance = SafariEconomy.getBalance(serverPlayer);
         ItemStack head = new ItemStack(Items.PLAYER_HEAD);
-        head.set(DataComponentTypes.CUSTOM_NAME, Text.of("§aBalance: §e" + balance + " Pokédollars"));
+        head.set(DataComponentTypes.CUSTOM_NAME, Text.translatable("message.safari.balance", balance).formatted(Formatting.GREEN));
 
         GameProfile profile = new GameProfile(serverPlayer.getUuid(), serverPlayer.getName().getString());
         ProfileComponent component = new ProfileComponent(profile);

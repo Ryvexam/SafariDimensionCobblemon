@@ -27,6 +27,10 @@ public class SafariMod implements ModInitializer {
             com.safari.session.SafariSessionManager.setServer(server);
             com.safari.state.SafariWorldState.load();
         });
+
+        ServerLifecycleEvents.SERVER_STOPPING.register(server ->
+                com.safari.session.SafariSessionManager.persistActiveSessionsForShutdown()
+        );
         
         // 2. Init Session Manager
         com.safari.session.SafariSessionManager.init();

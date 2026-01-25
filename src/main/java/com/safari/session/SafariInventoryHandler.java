@@ -8,6 +8,8 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +82,7 @@ public class SafariInventoryHandler {
         if (balls.getItem().toString().equals("minecraft:air")) {
              // Fallback
              balls = new ItemStack(Registries.ITEM.get(Identifier.of("cobblemon", "poke_ball")));
-             player.sendMessage(net.minecraft.text.Text.of("§cWarning: Configured Safari Ball (" + itemId + ") not found. Using Poke Balls."), false);
+             player.sendMessage(Text.translatable("message.safari.ball_missing", itemId).formatted(Formatting.RED), false);
         }
         
         balls.setCount(ballCount);

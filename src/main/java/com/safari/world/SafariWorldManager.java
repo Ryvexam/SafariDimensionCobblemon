@@ -16,6 +16,7 @@ public class SafariWorldManager {
     public static void findAndSetSafeSpot(ServerWorld world) {
         SafariWorldState.get().centerX = 0;
         SafariWorldState.get().centerZ = 0;
+        SafariWorldState.get().spawnInitialized = false;
         SafariWorldState.get().save();
         updateBorder(world, 0, 0);
         ensureSpawnPoint(world);
@@ -25,18 +26,26 @@ public class SafariWorldManager {
         int centerX = SafariWorldState.get().centerX;
         int centerZ = SafariWorldState.get().centerZ;
         world.getChunkManager().getChunk(centerX >> 4, centerZ >> 4, net.minecraft.world.chunk.ChunkStatus.FULL, true);
-        int surfaceY = world.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, centerX, centerZ);
-        int spawnY = surfaceY + SafariConfig.get().safariSpawnOffsetY;
-        if (spawnY <= world.getBottomY() + 1) {
-            spawnY = Math.max(SafariConfig.get().safariSpawnY, 64) + SafariConfig.get().safariSpawnOffsetY;
+
+        if (!SafariWorldState.get().spawnInitialized) {
+            int surfaceY = world.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, centerX, centerZ);
+            int spawnY = surfaceY + SafariConfig.get().safariSpawnOffsetY;
+            if (spawnY <= world.getBottomY() + 1) {
+                spawnY = Math.max(SafariConfig.get().safariSpawnY, 64) + SafariConfig.get().safariSpawnOffsetY;
+            }
+
+            SafariWorldState.get().spawnX = centerX;
+            SafariWorldState.get().spawnY = spawnY;
+            SafariWorldState.get().spawnZ = centerZ;
+            SafariWorldState.get().spawnInitialized = true;
+            SafariWorldState.get().save();
         }
 
-        SafariWorldState.get().spawnX = centerX;
-        SafariWorldState.get().spawnY = spawnY;
-        SafariWorldState.get().spawnZ = centerZ;
-        SafariWorldState.get().save();
-
-        ensureSafariNpc(world, new BlockPos(centerX, spawnY, centerZ));
+        ensureSafariNpc(world, new BlockPos(
+                SafariWorldState.get().spawnX,
+                SafariWorldState.get().spawnY,
+                SafariWorldState.get().spawnZ
+        ));
     }
 
     public static void ensureSafariNpcNear(ServerWorld world, BlockPos basePos) {
@@ -48,13 +57,18 @@ public class SafariWorldManager {
             return;
         }
 
+        if (SafariWorldState.get().guideNpcSpawned) {
+            return;
+        }
+
         BlockPos target = new BlockPos(basePos.getX() + 10, basePos.getY(), basePos.getZ());
         world.getServer().execute(() -> {
             world.getChunkManager().getChunk(target.getX() >> 4, target.getZ() >> 4, net.minecraft.world.chunk.ChunkStatus.FULL, true);
 
-            Box search = new Box(target).expand(8.0);
-            boolean exists = !world.getEntitiesByClass(SafariNpcEntity.class, search, entity -> true).isEmpty();
+            boolean exists = !world.getEntitiesByClass(SafariNpcEntity.class, new Box(target).expand(32.0), entity -> true).isEmpty();
             if (exists) {
+                SafariWorldState.get().guideNpcSpawned = true;
+                SafariWorldState.get().save();
                 return;
             }
 
@@ -68,7 +82,11 @@ public class SafariWorldManager {
             boolean spawned = world.spawnEntity(npc);
             if (!spawned) {
                 com.safari.SafariMod.LOGGER.warn("Safari NPC spawn failed at {},{},{}", target.getX(), target.getY(), target.getZ());
+                return;
             }
+
+            SafariWorldState.get().guideNpcSpawned = true;
+            SafariWorldState.get().save();
         });
     }
 

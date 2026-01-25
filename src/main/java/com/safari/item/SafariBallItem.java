@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -28,7 +29,9 @@ public class SafariBallItem extends Item {
         ItemStack stack = user.getStackInHand(hand);
 
         if (!world.getRegistryKey().equals(SafariDimension.SAFARI_DIM_KEY)) {
-            if (!world.isClient) user.sendMessage(net.minecraft.text.Text.of("§cYou can only use this in the Safari Zone!"), true);
+            if (!world.isClient) {
+                user.sendMessage(net.minecraft.text.Text.translatable("message.safari.only_use_in_safari").formatted(Formatting.RED), true);
+            }
             return TypedActionResult.pass(stack);
         }
 
@@ -85,12 +88,12 @@ public class SafariBallItem extends Item {
                         world.spawnEntity(proj);
                     }
                 } else {
-                    user.sendMessage(net.minecraft.text.Text.of("§cInternal Error: Ball constructor not found."), true);
+                    user.sendMessage(net.minecraft.text.Text.translatable("message.safari.ball_constructor_missing").formatted(Formatting.RED), true);
                 }
                 
             } catch (Exception e) {
                 e.printStackTrace();
-                user.sendMessage(net.minecraft.text.Text.of("§cInternal Error: " + e.getMessage()), true);
+                user.sendMessage(net.minecraft.text.Text.translatable("message.safari.internal_error", e.getMessage()).formatted(Formatting.RED), true);
             }
         }
 

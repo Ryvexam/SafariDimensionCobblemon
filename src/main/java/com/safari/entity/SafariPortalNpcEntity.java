@@ -7,7 +7,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -15,17 +14,34 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraft.item.ItemStack;
 import com.safari.block.SafariBlocks;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 
 public class SafariPortalNpcEntity extends PathAwareEntity {
 
-    private String npcName = "Safari Keeper";
-
     public SafariPortalNpcEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
-        this.setCustomName(Text.literal(npcName));
+        this.setCustomName(Text.translatable("entity.safari.safari_portal_npc"));
         this.setCustomNameVisible(true);
-        this.setStackInHand(Hand.MAIN_HAND, new ItemStack(SafariBlocks.SAFARI_PORTAL_FRAME));
+        applyHeldItems();
         this.setCanPickUpLoot(false);
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData) {
+        EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+        applyHeldItems();
+        return data;
+    }
+
+    private void applyHeldItems() {
+        this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(SafariBlocks.SAFARI_PORTAL_FRAME));
+        this.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
     }
 
     @Override
@@ -61,8 +77,11 @@ public class SafariPortalNpcEntity extends PathAwareEntity {
     }
 
     @Override
-    public boolean isInvulnerable() {
-        return true; // NPCs are invulnerable by default
+    public boolean damage(DamageSource source, float amount) {
+        if (source.isOf(DamageTypes.GENERIC_KILL) || source.isOf(DamageTypes.OUT_OF_WORLD)) {
+            return super.damage(source, amount);
+        }
+        return false;
     }
 
     @Override
@@ -75,28 +94,7 @@ public class SafariPortalNpcEntity extends PathAwareEntity {
         return true;
     }
 
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putString("CustomName", npcName);
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        if (nbt.contains("CustomName")) {
-            this.npcName = nbt.getString("CustomName");
-            this.setCustomName(Text.literal(npcName));
-        }
-    }
-
-    // Setters for customization
     public void setNpcName(String name) {
-        this.npcName = name;
         this.setCustomName(Text.literal(name));
-    }
-
-    public String getNpcName() {
-        return npcName;
     }
 }

@@ -20,6 +20,8 @@ public class SafariWorldState {
     public int spawnX = 0;
     public int spawnY = 160;
     public int spawnZ = 0;
+    public boolean spawnInitialized = false;
+    public boolean guideNpcSpawned = false;
 
     public static SafariWorldState get() {
         if (INSTANCE == null) {
@@ -55,6 +57,8 @@ public class SafariWorldState {
         this.currentDailySeed = new Random().nextLong();
         this.centerX = 0;
         this.centerZ = 0;
+        this.spawnInitialized = false;
+        this.guideNpcSpawned = false;
         save();
     }
 }

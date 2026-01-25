@@ -43,6 +43,13 @@ public class SafariConfig {
     public int safariMinLevel = 5;
     public int safariMaxLevel = 30;
 
+    // Entry title
+    public String entryTitle = "Safari Warning";
+    public String entrySubtitle = "Leaving ends your session and remaining time";
+    public int entryTitleFadeInTicks = 10;
+    public int entryTitleStayTicks = 60;
+    public int entryTitleFadeOutTicks = 10;
+
     public static SafariConfig get() {
         if (INSTANCE == null) {
             INSTANCE = new SafariConfig(); // Default fallback
@@ -78,7 +85,14 @@ public class SafariConfig {
                     || raw.has("allowMultiplayerSessions")
                     || raw.has("coreRadius")
                     || raw.has("resetOffsetRange")
-                    || raw.has("spawnRateMultiplier");
+                    || raw.has("spawnRateMultiplier")
+                    || !raw.has("entryTitle")
+                    || !raw.has("entrySubtitle")
+                    || !raw.has("entryTitleFadeInTicks")
+                    || !raw.has("entryTitleStayTicks")
+                    || !raw.has("entryTitleFadeOutTicks")
+                    || !raw.has("guideNpcSpawned")
+                    || !raw.has("spawnInitialized");
             INSTANCE = gson.fromJson(raw, SafariConfig.class);
             boolean normalized = normalizeDefaults();
             if (shouldRewrite || normalized) {
@@ -114,6 +128,26 @@ public class SafariConfig {
         }
         if (INSTANCE.maxBallsPurchasable < 0) {
             INSTANCE.maxBallsPurchasable = 0;
+            updated = true;
+        }
+        if (INSTANCE.entryTitle == null) {
+            INSTANCE.entryTitle = "Safari Warning";
+            updated = true;
+        }
+        if (INSTANCE.entrySubtitle == null) {
+            INSTANCE.entrySubtitle = "Leaving ends your session and remaining time";
+            updated = true;
+        }
+        if (INSTANCE.entryTitleFadeInTicks < 0) {
+            INSTANCE.entryTitleFadeInTicks = 10;
+            updated = true;
+        }
+        if (INSTANCE.entryTitleStayTicks < 0) {
+            INSTANCE.entryTitleStayTicks = 60;
+            updated = true;
+        }
+        if (INSTANCE.entryTitleFadeOutTicks < 0) {
+            INSTANCE.entryTitleFadeOutTicks = 10;
             updated = true;
         }
         return updated;

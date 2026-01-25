@@ -88,7 +88,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 ```
 
 Jar output:
-`build/libs/safari-dimension-0.0.3.jar`
+`build/libs/safari-dimension-0.0.6.jar`
 
 ## Notes
 

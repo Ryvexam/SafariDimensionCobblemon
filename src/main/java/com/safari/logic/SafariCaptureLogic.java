@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.EntityHitResult;
 
 import java.util.Random;
@@ -49,13 +50,13 @@ public class SafariCaptureLogic {
         boolean caught = RANDOM.nextDouble() < rate;
         
         if (caught) {
-            player.sendMessage(Text.of("§aYou caught the Pokémon!"), true);
+            player.sendMessage(Text.translatable("message.safari.capture_success").formatted(Formatting.GREEN), true);
             // Execute Capture
             // target.giveToPlayer(player); // Pseudo-code
             executeCapture(target, player);
             target.discard(); // Remove from world
         } else {
-            player.sendMessage(Text.of("§cIt broke free!"), true);
+            player.sendMessage(Text.translatable("message.safari.capture_fail").formatted(Formatting.RED), true);
             // Ball is consumed (we just don't refund it).
         }
 
@@ -81,7 +82,7 @@ public class SafariCaptureLogic {
              
         } catch (Exception e) {
             e.printStackTrace();
-            player.sendMessage(Text.of("§cError processing capture: " + e.getMessage()), false);
+            player.sendMessage(Text.translatable("message.safari.capture_error", e.getMessage()).formatted(Formatting.RED), false);
         }
     }
 }

@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +36,7 @@ public class SafariEvents {
             if (world.getServer() != null) {
                 world.getServer().execute(() -> {
                     Identifier id = Registries.ENTITY_TYPE.getId(entity.getType());
-                    if ("safari".equals(id.getNamespace()) && "safari_npc".equals(id.getPath())) {
+                    if (isSafariNpcEntityId(id)) {
                         return;
                     }
                     if (id.getNamespace().equals("cobblemon")) {
@@ -62,7 +63,7 @@ public class SafariEvents {
         PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
             if (isInSafari(player)) {
                 if (!player.isCreative()) {
-                    player.sendMessage(Text.of("§cYou cannot break blocks in the Safari!"), true);
+                    player.sendMessage(Text.translatable("message.safari.no_break_blocks").formatted(Formatting.RED), true);
                     return false;
                 }
             }
@@ -93,7 +94,9 @@ public class SafariEvents {
             if (isInSafari(player)) {
                 if (!player.isCreative()) {
                     var stack = player.getStackInHand(hand);
-                    if (stack != null && !stack.isEmpty() && stack.isOf(ModItems.SAFARI_NPC_SPAWN_EGG)) {
+                    if (stack != null && !stack.isEmpty()
+                            && (stack.isOf(ModItems.SAFARI_NPC_SPAWN_EGG)
+                            || stack.isOf(ModItems.SAFARI_PORTAL_NPC_SPAWN_EGG))) {
                         return ActionResult.PASS;
                     }
                     return ActionResult.FAIL;
@@ -119,7 +122,7 @@ public class SafariEvents {
                 return net.minecraft.util.TypedActionResult.pass(stack);
             }
             if ("cobblemon".equals(itemId.getNamespace()) && itemId.getPath().contains("ball")) {
-                player.sendMessage(Text.of("§cOnly Safari Balls can be used here."), true);
+                player.sendMessage(Text.translatable("message.safari.only_safari_balls").formatted(Formatting.RED), true);
                 return net.minecraft.util.TypedActionResult.fail(stack);
             }
             return net.minecraft.util.TypedActionResult.pass(stack);
@@ -239,5 +242,10 @@ public class SafariEvents {
                 world.setBlockState(place, SafariBlocks.SAFARI_PORTAL.getDefaultState().with(NetherPortalBlock.AXIS, axis));
             }
         }
+    }
+
+    private static boolean isSafariNpcEntityId(Identifier id) {
+        return "safari".equals(id.getNamespace())
+                && ("safari_npc".equals(id.getPath()) || "safari_portal_npc".equals(id.getPath()));
     }
 }

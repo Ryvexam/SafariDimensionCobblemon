@@ -9,6 +9,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 public class SafariTimeTicketItem extends Item {
@@ -31,13 +32,13 @@ public class SafariTimeTicketItem extends Item {
         }
 
         if (!player.getWorld().getRegistryKey().equals(SafariDimension.SAFARI_DIM_KEY)) {
-            player.sendMessage(Text.of("§cYou can only use this in the Safari Zone."), false);
+            player.sendMessage(Text.translatable("message.safari.only_use_in_safari").formatted(Formatting.RED), false);
             return TypedActionResult.fail(stack);
         }
 
         SafariSession session = SafariSessionManager.getSession(player);
         if (session == null) {
-            player.sendMessage(Text.of("§cYou are not in a Safari session."), false);
+            player.sendMessage(Text.translatable("message.safari.not_in_session").formatted(Formatting.RED), false);
             return TypedActionResult.fail(stack);
         }
 
@@ -48,7 +49,7 @@ public class SafariTimeTicketItem extends Item {
         session.addTime(minutes * 60L * 20L);
         stack.decrement(1);
         player.getItemCooldownManager().set(this, 20);
-        player.sendMessage(Text.of("§aAdded " + minutes + " minutes to your Safari session."), false);
+        player.sendMessage(Text.translatable("message.safari.added_time", minutes).formatted(Formatting.GREEN), false);
         return TypedActionResult.success(stack);
     }
 }

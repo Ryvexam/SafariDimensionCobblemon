@@ -17,18 +17,38 @@ import net.minecraft.world.World;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import com.safari.shop.SafariShopScreenHandler;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.entity.EntityData;
+import net.minecraft.world.ServerWorldAccess;
 
 import java.util.EnumSet;
 
 public class SafariNpcEntity extends PathAwareEntity {
     public SafariNpcEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
+        this.setCustomName(Text.translatable("entity.safari.safari_npc"));
+        this.setCustomNameVisible(true);
         this.setPersistent();
-        this.setInvulnerable(true);
-        this.setStackInHand(Hand.MAIN_HAND, new ItemStack(ModItems.SAFARI_BALL));
-        this.setStackInHand(Hand.OFF_HAND, new ItemStack(ModItems.SAFARI_TICKET_5));
+        applyHeldItems();
         this.setCanPickUpLoot(false);
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData) {
+        EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+        applyHeldItems();
+        return data;
+    }
+
+    private void applyHeldItems() {
+        this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ModItems.SAFARI_BALL));
+        this.equipStack(EquipmentSlot.OFFHAND, new ItemStack(ModItems.SAFARI_TICKET_5));
+        this.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
+        this.setEquipmentDropChance(EquipmentSlot.OFFHAND, 0.0f);
     }
 
     public static DefaultAttributeContainer createAttributes() {
@@ -55,11 +75,16 @@ public class SafariNpcEntity extends PathAwareEntity {
     }
 
     @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
+    @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         if (!this.getWorld().isClient && player instanceof ServerPlayerEntity serverPlayer) {
             serverPlayer.openHandledScreen(new SimpleNamedScreenHandlerFactory(
                     (syncId, inv, user) -> new SafariShopScreenHandler(syncId, inv),
-                    Text.of("Safari Shop")
+                    Text.translatable("message.safari.shop_title")
             ));
             return ActionResult.SUCCESS;
         }
@@ -68,6 +93,9 @@ public class SafariNpcEntity extends PathAwareEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        if (source.isOf(DamageTypes.GENERIC_KILL) || source.isOf(DamageTypes.OUT_OF_WORLD)) {
+            return super.damage(source, amount);
+        }
         return false;
     }
 
