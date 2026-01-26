@@ -3,6 +3,7 @@
 ## 0.0.8
 - Updated dependency to Cobblemon Economy 0.0.11.
 - Fixed Safari Ball 3D model texture reference.
+- Removed experimental world border isolation logic to prevent startup crashes with other mods.
 
 ## 0.0.7
 - Synchronize Safari dimension time with the Overworld time.

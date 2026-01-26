@@ -31,14 +31,6 @@ public class SafariMod implements ModInitializer {
         ServerLifecycleEvents.SERVER_STOPPING.register(server ->
                 com.safari.session.SafariSessionManager.persistActiveSessionsForShutdown()
         );
-
-        ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-            // Attach per-dimension border listener only to Safari dimension
-            net.minecraft.server.world.ServerWorld safariWorld = server.getWorld(com.safari.world.SafariDimension.SAFARI_DIM_KEY);
-            if (safariWorld != null) {
-                safariWorld.getWorldBorder().addListener(new com.safari.world.SafariBorderListener(safariWorld));
-            }
-        });
         
         // 2. Init Session Manager
         com.safari.session.SafariSessionManager.init();
