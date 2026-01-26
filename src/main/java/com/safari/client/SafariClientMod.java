@@ -13,10 +13,12 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.util.Identifier;
 
 public class SafariClientMod implements ClientModInitializer {
     private static final Identifier NPC_TEXTURE = Identifier.of(SafariMod.MOD_ID, "textures/entity/safari_npc.png");
+    public static ModelTransformationMode currentMode = ModelTransformationMode.NONE;
 
     @Override
     public void onInitializeClient() {
@@ -37,9 +39,12 @@ public class SafariClientMod implements ClientModInitializer {
                 }
         );
 
-        // Register 2D/3D switcher predicate
-        ModelPredicateProviderRegistry.register(ModItems.SAFARI_BALL, Identifier.of(SafariMod.MOD_ID, "hand"), (stack, world, entity, seed) -> {
-            return entity != null ? 1.0f : 0.0f;
+        // Register perspective predicate (0 = GUI/Other, 1 = Hand)
+        ModelPredicateProviderRegistry.register(ModItems.SAFARI_BALL, Identifier.of(SafariMod.MOD_ID, "perspective"), (stack, world, entity, seed) -> {
+            if (currentMode == ModelTransformationMode.GUI || currentMode == ModelTransformationMode.FIXED) {
+                return 0.0f;
+            }
+            return 1.0f;
         });
     }
 }

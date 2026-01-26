@@ -6,7 +6,8 @@
     "MixinLivingEntityDamage",
     "MixinPokeBallCaptureCalculatedEvent",
     "MixinSendOutPokemonHandler",
-    "MixinServerPlayerDeath"
+    "MixinServerPlayerDeath",
+    "MixinItemRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
