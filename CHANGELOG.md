@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.10
+- Updated Safari Ball 3D model to use `cobblemon:item/poke_ball_model` as parent.
+- Removed logic that gives free Safari Balls on entry.
+- Removed logic that clears Safari Balls on session end.
+
 ## 0.0.9
 - Fixed Safari Ball 3D model texture reference using correct Cobblemon path.
 

@@ -137,7 +137,7 @@ public class SafariSessionManager {
             return;
         }
 
-        // 4. Create Session Object with safe return position
+        // 5. Create Session Object with safe return position
         long duration = SafariConfig.get().sessionTimeMinutes * 60L * 20L;
         BlockPos safeReturnPos = findSafeExitPos((ServerWorld) player.getWorld(), getSafeReturnPos(player));
         SafariSession session = new SafariSession(
@@ -149,9 +149,6 @@ public class SafariSessionManager {
                 player.getPitch()
         );
         activeSessions.put(player.getUuid(), session);
-
-        // 5. Give Safari Kit (do not clear inventory)
-        SafariInventoryHandler.giveSafariKit(player, SafariConfig.get().initialSafariBalls);
 
         // 6. Teleport to Safari
         double x, y, z;
@@ -197,7 +194,6 @@ public class SafariSessionManager {
     public static void endSession(ServerPlayerEntity player) {
         SafariSession session = activeSessions.remove(player.getUuid());
         if (session != null) {
-            SafariInventoryHandler.removeSafariBalls(player);
             // 1. Teleport Back (inventory untouched)
             ServerWorld returnWorld = player.getServer().getWorld(session.getReturnDimension());
             if (returnWorld != null) {
@@ -222,11 +218,8 @@ public class SafariSessionManager {
     }
 
     public static void endSessionOnDeath(ServerPlayerEntity player) {
-        SafariSession session = activeSessions.remove(player.getUuid());
+        activeSessions.remove(player.getUuid());
         pausedSessions.remove(player.getUuid());
-        if (session != null) {
-            SafariInventoryHandler.removeSafariBalls(player);
-        }
     }
 
     public static void pauseSession(ServerPlayerEntity player) {
