@@ -93,7 +93,7 @@ export JAVA_HOME="/opt/homebrew/opt/openjdk"
 ```
 
 Jar output:
-`build/libs/safari-dimension-0.0.8.jar`
+`build/libs/safari-dimension-0.0.9.jar`
 
 ## Notes
 

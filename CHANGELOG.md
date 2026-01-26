@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.9
+- Fixed Safari Ball 3D model texture reference using correct Cobblemon path.
+
 ## 0.0.8
 - Updated dependency to Cobblemon Economy 0.0.11.
 - Fixed Safari Ball 3D model texture reference.
