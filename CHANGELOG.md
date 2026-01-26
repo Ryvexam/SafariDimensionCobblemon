@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.8
+- Updated dependency to Cobblemon Economy 0.0.11.
+- Fixed Safari Ball 3D model texture reference.
+
 ## 0.0.7
 - Synchronize Safari dimension time with the Overworld time.
 - Remove fixed time in Safari dimension type.
@@ -14,7 +18,7 @@
 - Added configurable custom spawn point (`forceCustomSpawn`, `customSpawnX`, `customSpawnY`, `customSpawnZ`).
 - Disabled automatic spawning of the Safari Guide NPC (manual spawn required).
 - World border is now automatically set and centered on the spawn point.
-- Allow NPCs from other mods to be spawned in the Safari dimension (only vanilla mobs are auto-removed).
+- Corrected entity spawn blocking to only target natural vanilla spawns, allowing manual NPC spawning.
 
 ## 0.0.6
 - Persist Safari sessions across disconnects and server shutdowns.

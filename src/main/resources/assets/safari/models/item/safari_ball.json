@@ -1,6 +1,6 @@
 {
   "parent": "cobblemon:item/ball_3d",
   "textures": {
-    "ball": "safari:item/safari_ball"
+    "ball": "cobblemon:item/safari_ball"
   }
 }
