@@ -17,7 +17,7 @@ public final class SafariEntities {
             Identifier.of(SafariMod.MOD_ID, "safari_npc"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, SafariNpcEntity::new)
                     .dimensions(EntityDimensions.fixed(0.6f, 1.8f))
-                    .trackRangeBlocks(8)
+                    .trackRangeBlocks(48)
                     .trackedUpdateRate(2)
                     .build()
     );

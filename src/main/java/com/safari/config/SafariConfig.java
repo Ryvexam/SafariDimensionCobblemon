@@ -37,6 +37,10 @@ public class SafariConfig {
     
     // Dimension
     public int dimensionSize = 2000;
+    public boolean forceCustomSpawn = false;
+    public double customSpawnX = 0.5;
+    public double customSpawnY = 160.0;
+    public double customSpawnZ = 0.5;
     public int safariSpawnY = 160;
     public int safariSpawnOffsetY = 3;
     public List<String> allowedBiomes = Arrays.asList("safari:safari_biome");
@@ -91,6 +95,10 @@ public class SafariConfig {
                     || !raw.has("entryTitleFadeInTicks")
                     || !raw.has("entryTitleStayTicks")
                     || !raw.has("entryTitleFadeOutTicks")
+                    || !raw.has("forceCustomSpawn")
+                    || !raw.has("customSpawnX")
+                    || !raw.has("customSpawnY")
+                    || !raw.has("customSpawnZ")
                     || !raw.has("guideNpcSpawned")
                     || !raw.has("spawnInitialized");
             INSTANCE = gson.fromJson(raw, SafariConfig.class);

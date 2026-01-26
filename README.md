@@ -10,14 +10,16 @@ Custom Minecraft 1.21.1 Fabric mod for Cobblemon that adds a dedicated Safari di
 - **No send‑out** inside Safari (prevents battles).
 - **No damage** inside Safari; block breaking/placing is **creative‑only**.
 - **Only Safari Balls** can be used in Safari.
-- **Safari Guide NPC** with a shop for balls and time tickets, auto‑spawns near `(0,0)`.
+- **Safari Guide NPC** with a shop for balls and time tickets.
 - **Safari Portal NPC** (thanks Aerendil).
 - **Custom Safari spawn pools** (common/uncommon/rare/ultra‑rare + special pools).
 - **Safari Ball catch rate** follows spawn rarity (common→ultra‑rare).
 - **Session resume** on reconnect with remaining time.
 - **Entry warning** title that leaving ends the session.
+- **Day/Night synchronization** with the Overworld.
+- **3D Render** for Safari Balls when held in hand.
 - **Shop UI** shows your Pokédollar balance and offers 16/32/64 ball bundles.
-- **World border** 2000x2000 centered on `(0,0)`.
+- **World border** configurable size, centered on spawn point.
 - **Config file** stored in the main `config` folder.
 
 ## Dependencies
@@ -48,6 +50,10 @@ Default values:
   "rareCatchRate": 0.1,
   "ultraRareCatchRate": 0.05,
   "dimensionSize": 2000,
+  "forceCustomSpawn": false,
+  "customSpawnX": 0.5,
+  "customSpawnY": 160.0,
+  "customSpawnZ": 0.5,
   "safariSpawnY": 160,
   "safariSpawnOffsetY": 3,
   "allowedBiomes": [
@@ -56,8 +62,7 @@ Default values:
   "safariMinLevel": 5,
   "safariMaxLevel": 30,
   "timePurchaseMinutes": 30,
-  "timePurchasePrice": 1000,
-  "ultraRareCatchRate": 0.05
+  "timePurchasePrice": 1000
 }
 ```
 
@@ -66,6 +71,7 @@ Default values:
 1. Build a Nether‑style frame with `safari:safari_portal_frame`.
 2. Light it with flint & steel.
 3. Walk into the portal to start a Safari session.
+   * **Note:** You must have enough money to enter (default 2500), otherwise you will be pushed back.
 
 ## Commands
 
@@ -82,15 +88,16 @@ Default values:
 ## Building
 
 ```bash
-export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
-export PATH="$JAVA_HOME/bin:$PATH"
+export JAVA_HOME="/opt/homebrew/opt/openjdk"
 ./gradlew clean build
 ```
 
 Jar output:
-`build/libs/safari-dimension-0.0.6.jar`
+`build/libs/safari-dimension-0.0.7.jar`
 
 ## Notes
 
-- The Safari spawn is always centered at `(0, 0)`.
+- The Safari spawn is centered at `(0, 0)` or the custom coordinates if enabled.
 - Players need at least one empty inventory slot to enter (Safari Balls are added).
+- NPCs are not pushable by players or entities.
+- Non-op players are returned to their last known position if they enter without a session.

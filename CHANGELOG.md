@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.0.7
+- Synchronize Safari dimension time with the Overworld time.
+- Remove fixed time in Safari dimension type.
+- Hard block portal entry if the player cannot afford the entrance price.
+- Fix Safari Guide NPC failing to respawn if previously killed or missing.
+- Add 3D render for Safari Ball when held in hand.
+- Fix ConcurrentModificationException when teleporting players out of Safari.
+- Prevent non-op players from teleporting into the Safari dimension without a session.
+- Bounce non-op players back to their last known non-Safari position if they attempt to enter illegally.
+- Increase Safari NPC tracking range to 48 blocks for better visibility.
+- NPCs are no longer pushable by players or other entities.
+- Added configurable custom spawn point (`forceCustomSpawn`, `customSpawnX`, `customSpawnY`, `customSpawnZ`).
+- Disabled automatic spawning of the Safari Guide NPC (manual spawn required).
+- World border is now automatically set and centered on the spawn point.
+- Allow NPCs from other mods to be spawned in the Safari dimension (only vanilla mobs are auto-removed).
+
 ## 0.0.6
 - Persist Safari sessions across disconnects and server shutdowns.
 - Prevent non-session players from staying in the Safari dimension.

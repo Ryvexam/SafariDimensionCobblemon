@@ -16,6 +16,7 @@
   "message.safari.session_ended": "Your Safari session has ended.",
   "message.safari.time_remaining": "Time Remaining: %1$02d:%2$02d",
   "message.safari.not_in_session": "You are not in a Safari session.",
+  "message.safari.cant_teleport": "You can't teleport into the Safari.",
   "message.safari.config_reloaded": "Config reloaded!",
   "message.safari.already_in_session": "You are already in a Safari session!",
   "message.safari.inventory_full": "Your inventory is full! You need 1 slot for Safari Balls before entering Safari.",

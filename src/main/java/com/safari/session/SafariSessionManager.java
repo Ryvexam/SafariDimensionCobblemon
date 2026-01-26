@@ -38,6 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SafariSessionManager {
     private static final Map<UUID, SafariSession> activeSessions = new ConcurrentHashMap<>();
     private static final Map<UUID, ResumeSession> pausedSessions = new ConcurrentHashMap<>();
+    private static final Map<UUID, LastKnownPos> lastKnownPositions = new ConcurrentHashMap<>();
     private static net.minecraft.server.MinecraftServer server;
     private static final Map<UUID, Long> enterDenyCooldown = new ConcurrentHashMap<>();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -85,18 +86,24 @@ public class SafariSessionManager {
 
         if (chargeEntry) {
             int price = SafariConfig.get().entrancePrice;
-            boolean paid = SafariEconomy.deduct(player, price);
-            com.safari.SafariMod.LOGGER.info(
-                    "Safari entry payment: player={}, price={}, success={}",
-                    player.getName().getString(),
-                    price,
-                    paid
-            );
-            if (!paid) {
+            if (price > 0 && !SafariEconomy.hasEnough(player, price)) {
                 player.sendMessage(Text.translatable("message.safari.need_money_entry", price).formatted(Formatting.RED), false);
                 return false;
             }
-            player.sendMessage(Text.translatable("message.safari.paid_entry", price).formatted(Formatting.GREEN), false);
+            if (price > 0) {
+                boolean paid = SafariEconomy.deduct(player, price);
+                com.safari.SafariMod.LOGGER.info(
+                        "Safari entry payment: player={}, price={}, success={}",
+                        player.getName().getString(),
+                        price,
+                        paid
+                );
+                if (!paid) {
+                    player.sendMessage(Text.translatable("message.safari.need_money_entry", price).formatted(Formatting.RED), false);
+                    return false;
+                }
+                player.sendMessage(Text.translatable("message.safari.paid_entry", price).formatted(Formatting.GREEN), false);
+            }
         }
 
         startSession(player);
@@ -147,13 +154,20 @@ public class SafariSessionManager {
         SafariInventoryHandler.giveSafariKit(player, SafariConfig.get().initialSafariBalls);
 
         // 6. Teleport to Safari
-        int x = SafariWorldState.get().spawnX;
-        int z = SafariWorldState.get().spawnZ;
-        int y = SafariWorldState.get().spawnY;
-        if (y <= safariWorld.getBottomY()) {
-            y = SafariConfig.get().safariSpawnY + SafariConfig.get().safariSpawnOffsetY;
+        double x, y, z;
+        if (SafariConfig.get().forceCustomSpawn) {
+            x = SafariConfig.get().customSpawnX;
+            y = SafariConfig.get().customSpawnY;
+            z = SafariConfig.get().customSpawnZ;
+        } else {
+            x = SafariWorldState.get().spawnX + 0.5;
+            z = SafariWorldState.get().spawnZ + 0.5;
+            y = SafariWorldState.get().spawnY;
+            if (y <= safariWorld.getBottomY()) {
+                y = SafariConfig.get().safariSpawnY + SafariConfig.get().safariSpawnOffsetY;
+            }
         }
-        player.teleport(safariWorld, x + 0.5, y, z + 0.5, 0, 0);
+        player.teleport(safariWorld, x, y, z, 0, 0);
 
         int fadeInTicks = Math.max(0, SafariConfig.get().entryTitleFadeInTicks);
         int stayTicks = Math.max(0, SafariConfig.get().entryTitleStayTicks);
@@ -271,6 +285,25 @@ public class SafariSessionManager {
     }
 
     private static void tick() {
+        if (server != null) {
+            ServerWorld overworld = server.getWorld(World.OVERWORLD);
+            ServerWorld safariWorld = server.getWorld(SafariDimension.SAFARI_DIM_KEY);
+            if (overworld != null && safariWorld != null) {
+                safariWorld.setTimeOfDay(overworld.getTimeOfDay());
+            }
+
+            for (ServerPlayerEntity player : new java.util.ArrayList<>(server.getPlayerManager().getPlayerList())) {
+                if (!player.getWorld().getRegistryKey().equals(SafariDimension.SAFARI_DIM_KEY)) {
+                    lastKnownPositions.put(player.getUuid(), new LastKnownPos(
+                            player.getWorld().getRegistryKey(),
+                            player.getBlockPos(),
+                            player.getYaw(),
+                            player.getPitch()
+                    ));
+                }
+            }
+        }
+
         activeSessions.values().forEach(session -> {
             session.tick();
 
@@ -304,19 +337,30 @@ public class SafariSessionManager {
         if (server != null) {
             ServerWorld safariWorld = server.getWorld(SafariDimension.SAFARI_DIM_KEY);
             if (safariWorld != null) {
-                for (ServerPlayerEntity player : safariWorld.getPlayers()) {
+                for (ServerPlayerEntity player : new java.util.ArrayList<>(safariWorld.getPlayers())) {
                     UUID uuid = player.getUuid();
                     if (!activeSessions.containsKey(uuid) && !pausedSessions.containsKey(uuid)) {
-                        ServerWorld overworld = server.getWorld(World.OVERWORLD);
-                        if (overworld != null) {
-                            player.teleport(overworld,
-                                    overworld.getSpawnPos().getX(),
-                                    overworld.getSpawnPos().getY(),
-                                    overworld.getSpawnPos().getZ(),
-                                    player.getYaw(),
-                                    player.getPitch()
+                        if (player.hasPermissionLevel(2)) {
+                            continue;
+                        }
+                        LastKnownPos lastKnown = lastKnownPositions.get(uuid);
+                        ServerWorld returnWorld = lastKnown != null
+                                ? server.getWorld(lastKnown.dimension())
+                                : server.getWorld(World.OVERWORLD);
+                        if (returnWorld != null) {
+                            BlockPos returnPos = lastKnown != null
+                                    ? findSafeExitPos(returnWorld, lastKnown.pos())
+                                    : returnWorld.getSpawnPos();
+                            float returnYaw = lastKnown != null ? lastKnown.yaw() : player.getYaw();
+                            float returnPitch = lastKnown != null ? lastKnown.pitch() : player.getPitch();
+                            player.teleport(returnWorld,
+                                    returnPos.getX(),
+                                    returnPos.getY(),
+                                    returnPos.getZ(),
+                                    returnYaw,
+                                    returnPitch
                             );
-                            player.sendMessage(Text.translatable("message.safari.not_in_session").formatted(Formatting.RED), false);
+                            player.sendMessage(Text.translatable("message.safari.cant_teleport").formatted(Formatting.RED), false);
                         }
                     }
                 }
@@ -492,5 +536,8 @@ public class SafariSessionManager {
         var state = world.getBlockState(pos);
         return state.isOf(com.safari.block.SafariBlocks.SAFARI_PORTAL)
                 || state.isOf(com.safari.block.SafariBlocks.SAFARI_PORTAL_FRAME);
+    }
+
+    private record LastKnownPos(RegistryKey<World> dimension, BlockPos pos, float yaw, float pitch) {
     }
 }

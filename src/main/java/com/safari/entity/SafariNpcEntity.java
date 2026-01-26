@@ -99,6 +99,11 @@ public class SafariNpcEntity extends PathAwareEntity {
         return false;
     }
 
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
     private static final class SmoothLookGoal extends Goal {
         private final SafariNpcEntity npc;
         private int cooldown;

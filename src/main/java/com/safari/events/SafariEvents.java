@@ -27,18 +27,15 @@ import net.minecraft.block.NetherPortalBlock;
 public class SafariEvents {
 
     public static void init() {
-        // 1. Block Vanilla Spawns (Only Cobblemon allowed in Safari Dimension)
+        // 1. Setup Safari Entity Logic (Level scaling for Cobblemon)
         ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
             if (!world.getRegistryKey().equals(SafariDimension.SAFARI_DIM_KEY)) return;
             if (entity.isPlayer()) return;
 
-            // Defer all entity modifications to avoid ConcurrentModificationException
+            // Defer check
             if (world.getServer() != null) {
                 world.getServer().execute(() -> {
                     Identifier id = Registries.ENTITY_TYPE.getId(entity.getType());
-                    if (isSafariNpcEntityId(id)) {
-                        return;
-                    }
                     if (id.getNamespace().equals("cobblemon")) {
                         if (entity instanceof PokemonEntity pokemonEntity) {
                             if (!pokemonEntity.getCommandTags().contains("safari_level_set")) {
@@ -49,11 +46,6 @@ public class SafariEvents {
                                 pokemonEntity.addCommandTag("safari_level_set");
                             }
                         }
-                        return;
-                    }
-
-                    if (entity instanceof net.minecraft.entity.LivingEntity) {
-                        entity.discard();
                     }
                 });
             }
