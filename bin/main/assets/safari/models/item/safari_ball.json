@@ -1,6 +1,6 @@
 {
-  "parent": "cobblemon:item/ball_3d",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "ball": "safari:item/safari_ball"
+    "layer0": "cobblemon:item/poke_balls/safari_ball"
   }
 }
