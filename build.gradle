@@ -14,6 +14,7 @@ repositories {
 	mavenCentral()
     maven { url "https://maven.fabricmc.net/" }
     maven { url "https://maven.impactdev.net/repository/development/" } // For economy/cobblemon often needed
+    maven { url "https://cursemaven.com" }
 }
 
 dependencies {
