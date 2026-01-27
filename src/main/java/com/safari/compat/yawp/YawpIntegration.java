@@ -15,11 +15,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.Set;
 
 public class YawpIntegration {
-    public static final String FLAG_ID = "melee-npc-cobeco";
+    public static final String FLAG_ID = "melee-npc-safari";
     public static Flag SAFARI_FLAG;
 
     public static void register() {
-        // Registering a flag named "melee-npc-cobeco" under the "yawp" namespace
+        // Registering a flag named "melee-npc-safari" under the "yawp" namespace
         FlagMetaInfo meta = new FlagMetaInfo(Set.of(), FlagFrequency.NORMAL);
         FlagRegister.registerFlag("yawp", FLAG_ID, meta);
         SAFARI_FLAG = FlagRegister.getFlag(Identifier.of("yawp", FLAG_ID));
