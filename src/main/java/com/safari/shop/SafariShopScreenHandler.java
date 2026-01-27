@@ -126,7 +126,7 @@ public class SafariShopScreenHandler extends ScreenHandler {
             return;
         }
 
-        int balance = SafariEconomy.getBalance(serverPlayer);
+        int balance = SafariEconomy.getBalance(serverPlayer).intValue();
         ItemStack head = new ItemStack(Items.PLAYER_HEAD);
         head.set(DataComponentTypes.CUSTOM_NAME, Text.translatable("message.safari.balance", balance).formatted(Formatting.GREEN));
 

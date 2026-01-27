@@ -1,5 +1,7 @@
 package com.safari;
 
+import com.safari.economy.CobblemonEconomyProvider;
+import com.safari.economy.EconomyRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.registry.Registries;
@@ -16,7 +18,7 @@ public class SafariMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Initializing Safari Dimension Mod...");
+        LOGGER.info("Initializing Safari Dimension Mod..."); 
         
         // 0. Init Compat (YAWP, etc.)
         com.safari.compat.CompatHandler.init();
@@ -53,7 +55,10 @@ public class SafariMod implements ModInitializer {
         com.safari.entity.SafariEntities.register();
         com.safari.entity.SafariEntities.registerAttributes();
 
-        // 6. Register Chunk Generator Codec
+        // 6. Register the CobblemonEconomyProvider with a 0 priority -> enable addons to add additional EconomyProvider
+        EconomyRegistry.register(new CobblemonEconomyProvider(),0);
+
+        // 7. Register Chunk Generator Codec
         Registry.register(Registries.CHUNK_GENERATOR, Identifier.of(MOD_ID, "safari_noise"), com.safari.world.SafariChunkGenerator.CODEC);
     }
 }
