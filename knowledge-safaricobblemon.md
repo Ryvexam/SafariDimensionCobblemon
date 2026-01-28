@@ -11,7 +11,7 @@ Purpose: help support/ticket responses for the Safari Dimension mod and guide pl
 Required jars in `mods/`:
 - `fabric-api`
 - `cobblemon` (1.7.1)
-- `cobblemon-economy`
+- `cobblemon-economy` (0.0.13)
 
 If economy features fail (entry, tickets, ball purchases), confirm `cobblemon-economy` is installed and loaded.
 
