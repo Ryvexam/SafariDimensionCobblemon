@@ -7,3 +7,12 @@ test_permission.txt
 *.iml
 .idea/
 out/
+.classpath
+.factorypath
+.project
+.settings/
+bin/
+.classpath
+.factorypath
+.project
+.settings/

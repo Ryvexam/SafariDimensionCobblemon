@@ -62,19 +62,27 @@ public class SafariConfig {
     }
 
     public static void load() {
-        if (currentConfigFile != null) load(currentConfigFile);
+        if (currentConfigFile != null) {
+            loadFromFile(currentConfigFile);
+        }
     }
 
     public static void load(File worldDir) {
-        File configFile = new File(worldDir, "safari-config.json");
-        currentConfigFile = configFile;
-        
+        currentConfigFile = new File(worldDir, "safari-config.json");
+        loadFromFile(currentConfigFile);
+    }
+
+    private static void loadFromFile(File configFile) {
+        if (configFile == null) {
+            return;
+        }
+
         if (!configFile.exists()) {
             INSTANCE = new SafariConfig();
             save();
             return;
         }
-        
+
         try (FileReader reader = new FileReader(configFile)) {
             Gson gson = new Gson();
             JsonObject raw = JsonParser.parseReader(reader).getAsJsonObject();

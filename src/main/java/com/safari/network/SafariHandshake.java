@@ -1,14 +1,17 @@
 package com.safari.network;
 
 import com.safari.SafariMod;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -19,7 +22,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class SafariHandshake {
-    public static final Identifier VERSION_CHANNEL = Identifier.of(SafariMod.MOD_ID, "version");
+    public static final CustomPayload.Id<VersionPayload> VERSION_ID = new CustomPayload.Id<>(
+            Identifier.of(SafariMod.MOD_ID, "version")
+    );
     private static final int TIMEOUT_TICKS = 100;
     private static final int MAX_VERSION_LENGTH = 64;
     private static final Map<UUID, Integer> pending = new ConcurrentHashMap<>();
@@ -28,10 +33,10 @@ public final class SafariHandshake {
     }
 
     public static void initServer() {
-        ServerPlayNetworking.registerGlobalReceiver(VERSION_CHANNEL, (server, player, handler, buf, responseSender) -> {
-            String clientVersion = readVersion(buf);
-            server.execute(() -> handleVersion(player, clientVersion));
-        });
+        PayloadTypeRegistry.playC2S().register(VERSION_ID, VersionPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(VERSION_ID, (payload, context) ->
+                context.server().execute(() -> handleVersion(context.player(), payload.version()))
+        );
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
                 pending.put(handler.getPlayer().getUuid(), server.getTicks())
@@ -46,9 +51,7 @@ public final class SafariHandshake {
 
     public static void initClient() {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeString(getModVersion(), MAX_VERSION_LENGTH);
-            ClientPlayNetworking.send(VERSION_CHANNEL, buf);
+            ClientPlayNetworking.send(new VersionPayload(getModVersion()));
         });
     }
 
@@ -81,18 +84,23 @@ public final class SafariHandshake {
         }
     }
 
-    private static String readVersion(PacketByteBuf buf) {
-        try {
-            return buf.readString(MAX_VERSION_LENGTH);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
     private static String getModVersion() {
         return FabricLoader.getInstance()
                 .getModContainer(SafariMod.MOD_ID)
                 .map(container -> container.getMetadata().getVersion().getFriendlyString())
                 .orElse("unknown");
+    }
+
+    public record VersionPayload(String version) implements CustomPayload {
+        public static final PacketCodec<RegistryByteBuf, VersionPayload> CODEC = PacketCodec.tuple(
+                PacketCodecs.string(MAX_VERSION_LENGTH),
+                VersionPayload::version,
+                VersionPayload::new
+        );
+
+        @Override
+        public Id<? extends CustomPayload> getId() {
+            return VERSION_ID;
+        }
     }
 }

@@ -11,6 +11,8 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.entity.vehicle.ChestBoatEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -164,6 +166,9 @@ public class SafariEvents {
         // 5. Prevent attacking entities
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
             if (isInSafari(player)) {
+                if (entity instanceof BoatEntity || entity instanceof ChestBoatEntity) {
+                    return ActionResult.PASS;
+                }
                 return ActionResult.FAIL;
             }
             return ActionResult.PASS;

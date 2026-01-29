@@ -1,13 +1,16 @@
 # Changelog
 
-## 0.0.11
+## 0.0.12
 - **Bug Fix:** Missed Safari Balls now correctly drop as the modded item (`safari:safari_ball`) instead of the standard Cobblemon one.
 - **Battle Restriction:** Prevented battles from being initiated within the Safari Zone (no more launching Pokémon at wild ones). Added a fallback to immediately end any battle that somehow starts in the Safari dimension.
 - **Session Security:** Players found in the Safari dimension without an active session (and not an OP) are now automatically teleported back to their last known safe position or world spawn.
 - **NPC AI Update:** Safari Guide and Safari Keeper are now stationary and will smoothly look at nearby players.
 - **Permissions:** Restricted NPC renaming with Name Tags to Operators (level 2+) only.
 - **Localization:** Added full translation support for all new messages and visibility modes.
-- **Maintenance:** Updated dependency to Cobblemon Economy 0.0.12.
+- **Handshake:** Clients must match the server mod version on join; mismatches are disconnected with a clear message.
+- **Gameplay:** Boats can be broken in the Safari (other entity attacks remain blocked).
+- **Fix:** `/safari reload` no longer corrupts the config path on repeated reloads.
+- **Maintenance:** Updated dependency to Cobblemon Economy 0.0.13.
 
 ## 0.0.10
 - Added NPC Name Toggler feature (`/safari npcnametoggler`) to cycle NPC name visibility (Hover, Always, Never).

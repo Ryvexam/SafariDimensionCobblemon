@@ -30,7 +30,7 @@ Custom Minecraft 1.21.1 Fabric mod for Cobblemon that adds a dedicated Safari di
 Place these jars in your `mods` folder:
 1. `fabric-api`
 2. `cobblemon` (1.7.1)
-3. `cobblemon-economy`
+3. `cobblemon-economy` (0.0.13)
 
 ## Configuration
 
@@ -96,7 +96,11 @@ export JAVA_HOME="/opt/homebrew/opt/openjdk"
 ```
 
 Jar output:
-`build/libs/safari-dimension-0.0.10.jar`
+`build/libs/safari-dimension-0.0.12.jar`
+
+## Git workflow
+
+- Create one branch per feature using the `feature/xxxxxxx` naming format.
 
 ## Notes
 
