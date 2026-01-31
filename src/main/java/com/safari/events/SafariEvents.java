@@ -123,6 +123,10 @@ public class SafariEvents {
                             || stack.isOf(ModItems.SAFARI_PORTAL_NPC_SPAWN_EGG))) {
                         return ActionResult.PASS;
                     }
+                    // Allow fishing rods
+                    if (stack.isOf(Items.FISHING_ROD)) {
+                        return ActionResult.PASS;
+                    }
                     return ActionResult.FAIL;
                 }
             }
