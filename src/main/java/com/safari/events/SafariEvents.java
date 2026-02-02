@@ -142,6 +142,10 @@ public class SafariEvents {
             if (stack == null || stack.isEmpty()) {
                 return net.minecraft.util.TypedActionResult.pass(stack);
             }
+            // Allow fishing rods
+            if (stack.isOf(Items.FISHING_ROD)) {
+                return net.minecraft.util.TypedActionResult.pass(stack);
+            }
             var itemId = Registries.ITEM.getId(stack.getItem());
             if (itemId == null) {
                 return net.minecraft.util.TypedActionResult.pass(stack);
