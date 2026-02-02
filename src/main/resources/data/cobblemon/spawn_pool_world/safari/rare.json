@@ -855,6 +855,176 @@
                     "safari:safari_biome"
                 ]
             }
+        },
+        {
+            "id": "kingdra-1",
+            "pokemon": "kingdra",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 3.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "kingdra-2",
+            "pokemon": "kingdra",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 3.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "lapras-1",
+            "pokemon": "lapras",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "lapras-2",
+            "pokemon": "lapras",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "sharpedo-1",
+            "pokemon": "sharpedo",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "sharpedo-2",
+            "pokemon": "sharpedo",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "wailmer-1",
+            "pokemon": "wailmer",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "wailmer-2",
+            "pokemon": "wailmer",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "crawdaunt-1",
+            "pokemon": "crawdaunt",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "crawdaunt-2",
+            "pokemon": "crawdaunt",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "rare",
+            "level": "1-1",
+            "weight": 2.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
         }
     ]
 }

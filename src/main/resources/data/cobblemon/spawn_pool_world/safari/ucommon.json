@@ -664,6 +664,176 @@
                     "safari:safari_biome"
                 ]
             }
+        },
+        {
+            "id": "seadra-1",
+            "pokemon": "seadra",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 5.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "seadra-2",
+            "pokemon": "seadra",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 5.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "tentacruel-1",
+            "pokemon": "tentacruel",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "tentacruel-2",
+            "pokemon": "tentacruel",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "mantine-1",
+            "pokemon": "mantine",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "mantine-2",
+            "pokemon": "mantine",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "octillery-1",
+            "pokemon": "octillery",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "octillery-2",
+            "pokemon": "octillery",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 4.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "seaking-1",
+            "pokemon": "seaking",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 3.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "seaking-2",
+            "pokemon": "seaking",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "uncommon",
+            "level": "1-1",
+            "weight": 3.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
         }
     ]
 }
