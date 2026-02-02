@@ -1381,8 +1381,8 @@
             }
         },
         {
-            "id": "kyogre-1",
-            "pokemon": "kyogre",
+            "id": "cloyster-1",
+            "pokemon": "cloyster",
             "presets": [
                 "water_surface"
             ],
@@ -1390,7 +1390,7 @@
             "context": "surface",
             "bucket": "ultra-rare",
             "level": "1-1",
-            "weight": 0.1,
+            "weight": 0.8,
             "condition": {
                 "biomes": [
                     "safari:safari_biome"
@@ -1398,8 +1398,8 @@
             }
         },
         {
-            "id": "kyogre-2",
-            "pokemon": "kyogre",
+            "id": "cloyster-2",
+            "pokemon": "cloyster",
             "presets": [
                 "underwater"
             ],
@@ -1407,7 +1407,7 @@
             "context": "submerged",
             "bucket": "ultra-rare",
             "level": "1-1",
-            "weight": 0.1,
+            "weight": 0.8,
             "condition": {
                 "biomes": [
                     "safari:safari_biome"
@@ -1415,8 +1415,8 @@
             }
         },
         {
-            "id": "lugia-1",
-            "pokemon": "lugia",
+            "id": "slowking-1",
+            "pokemon": "slowking",
             "presets": [
                 "water_surface"
             ],
@@ -1424,7 +1424,7 @@
             "context": "surface",
             "bucket": "ultra-rare",
             "level": "1-1",
-            "weight": 0.08,
+            "weight": 0.6,
             "condition": {
                 "biomes": [
                     "safari:safari_biome"
@@ -1432,8 +1432,8 @@
             }
         },
         {
-            "id": "lugia-2",
-            "pokemon": "lugia",
+            "id": "slowking-2",
+            "pokemon": "slowking",
             "presets": [
                 "underwater"
             ],
@@ -1441,7 +1441,7 @@
             "context": "submerged",
             "bucket": "ultra-rare",
             "level": "1-1",
-            "weight": 0.08,
+            "weight": 0.6,
             "condition": {
                 "biomes": [
                     "safari:safari_biome"
@@ -1449,8 +1449,8 @@
             }
         },
         {
-            "id": "manaphy-1",
-            "pokemon": "manaphy",
+            "id": "poliwrath-1",
+            "pokemon": "poliwrath",
             "presets": [
                 "water_surface"
             ],
@@ -1458,7 +1458,7 @@
             "context": "surface",
             "bucket": "ultra-rare",
             "level": "1-1",
-            "weight": 0.06,
+            "weight": 0.7,
             "condition": {
                 "biomes": [
                     "safari:safari_biome"
@@ -1466,8 +1466,8 @@
             }
         },
         {
-            "id": "manaphy-2",
-            "pokemon": "manaphy",
+            "id": "poliwrath-2",
+            "pokemon": "poliwrath",
             "presets": [
                 "underwater"
             ],
@@ -1475,7 +1475,75 @@
             "context": "submerged",
             "bucket": "ultra-rare",
             "level": "1-1",
-            "weight": 0.06,
+            "weight": 0.7,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "dewgong-1",
+            "pokemon": "dewgong",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "ultra-rare",
+            "level": "1-1",
+            "weight": 0.6,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "dewgong-2",
+            "pokemon": "dewgong",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "ultra-rare",
+            "level": "1-1",
+            "weight": 0.6,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "starmie-1",
+            "pokemon": "starmie",
+            "presets": [
+                "water_surface"
+            ],
+            "type": "pokemon",
+            "context": "surface",
+            "bucket": "ultra-rare",
+            "level": "1-1",
+            "weight": 0.8,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "starmie-2",
+            "pokemon": "starmie",
+            "presets": [
+                "underwater"
+            ],
+            "type": "pokemon",
+            "context": "submerged",
+            "bucket": "ultra-rare",
+            "level": "1-1",
+            "weight": 0.8,
             "condition": {
                 "biomes": [
                     "safari:safari_biome"
