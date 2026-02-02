@@ -55,4 +55,4 @@ Key fields:
 
 - Fabric API
 - Cobblemon 1.7.1
-- Cobblemon Economy 0.0.13
+- Cobblemon Economy 0.0.14
