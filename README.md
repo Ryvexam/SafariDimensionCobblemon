@@ -96,7 +96,7 @@ export JAVA_HOME="/opt/homebrew/opt/openjdk"
 ```
 
 Jar output:
-`build/libs/safari-dimension-0.0.12.jar`
+`build/libs/safari-dimension-0.0.13.jar`
 
 ## Git workflow
 
