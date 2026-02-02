@@ -1008,7 +1008,7 @@
         },
         {
             "id": "huntail-1",
-            "pokemon": "milotic",
+            "pokemon": "huntail",
             "presets": [
                 "water_surface"
             ],
@@ -1025,7 +1025,7 @@
         },
         {
             "id": "huntail-2",
-            "pokemon": "milotic",
+            "pokemon": "huntail",
             "presets": [
                 "underwater"
             ],
@@ -1042,7 +1042,7 @@
         },
         {
             "id": "gorebyss-1",
-            "pokemon": "milotic",
+            "pokemon": "gorebyss",
             "presets": [
                 "water_surface"
             ],
@@ -1059,7 +1059,7 @@
         },
         {
             "id": "gorebyss-2",
-            "pokemon": "milotic",
+            "pokemon": "gorebyss",
             "presets": [
                 "underwater"
             ],
@@ -1076,7 +1076,7 @@
         },
         {
             "id": "relicanth-1",
-            "pokemon": "milotic",
+            "pokemon": "relicanth",
             "presets": [
                 "water_surface"
             ],
@@ -1093,7 +1093,7 @@
         },
         {
             "id": "relicanth-2",
-            "pokemon": "milotic",
+            "pokemon": "relicanth",
             "presets": [
                 "underwater"
             ],
