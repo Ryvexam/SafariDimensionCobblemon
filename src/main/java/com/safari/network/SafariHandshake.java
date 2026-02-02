@@ -1,8 +1,6 @@
 package com.safari.network;
 
 import com.safari.SafariMod;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -47,12 +45,6 @@ public final class SafariHandshake {
         );
 
         ServerTickEvents.END_SERVER_TICK.register(SafariHandshake::tickServer);
-    }
-
-    public static void initClient() {
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            ClientPlayNetworking.send(new VersionPayload(getModVersion()));
-        });
     }
 
     private static void handleVersion(ServerPlayerEntity player, String clientVersion) {

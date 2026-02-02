@@ -18,7 +18,7 @@ public class SafariClientMod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        com.safari.network.SafariHandshake.initClient();
+        com.safari.network.SafariHandshakeClient.initClient();
         EntityRendererRegistry.register(SafariEntities.SAFARI_NPC, (EntityRendererFactory.Context context) ->
                 new MobEntityRenderer<SafariNpcEntity, BipedEntityModel<SafariNpcEntity>>(
                         context,
