@@ -21,6 +21,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.item.Items;
+import net.minecraft.item.FishingRodItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.math.Direction;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
@@ -123,8 +124,7 @@ public class SafariEvents {
                             || stack.isOf(ModItems.SAFARI_PORTAL_NPC_SPAWN_EGG))) {
                         return ActionResult.PASS;
                     }
-                    // Allow fishing rods
-                    if (stack.isOf(Items.FISHING_ROD)) {
+                    if (isFishingRod(stack)) {
                         return ActionResult.PASS;
                     }
                     return ActionResult.FAIL;
@@ -142,8 +142,7 @@ public class SafariEvents {
             if (stack == null || stack.isEmpty()) {
                 return net.minecraft.util.TypedActionResult.pass(stack);
             }
-            // Allow fishing rods
-            if (stack.isOf(Items.FISHING_ROD)) {
+            if (isFishingRod(stack)) {
                 return net.minecraft.util.TypedActionResult.pass(stack);
             }
             var itemId = Registries.ITEM.getId(stack.getItem());
@@ -153,7 +152,7 @@ public class SafariEvents {
             if ("safari".equals(itemId.getNamespace())) {
                 return net.minecraft.util.TypedActionResult.pass(stack);
             }
-            if ("cobblemon".equals(itemId.getNamespace()) && itemId.getPath().contains("ball")) {
+            if (isCobblemonBall(itemId)) {
                 player.sendMessage(Text.translatable("message.safari.only_safari_balls").formatted(Formatting.RED), true);
                 return net.minecraft.util.TypedActionResult.fail(stack);
             }
@@ -282,5 +281,24 @@ public class SafariEvents {
     private static boolean isSafariNpcEntityId(Identifier id) {
         return "safari".equals(id.getNamespace())
                 && ("safari_npc".equals(id.getPath()) || "safari_portal_npc".equals(id.getPath()));
+    }
+
+    private static boolean isFishingRod(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return false;
+        }
+        if (stack.isOf(Items.FISHING_ROD) || stack.getItem() instanceof FishingRodItem) {
+            return true;
+        }
+        Identifier itemId = Registries.ITEM.getId(stack.getItem());
+        return itemId != null
+                && "cobblemon".equals(itemId.getNamespace())
+                && itemId.getPath().endsWith("_rod");
+    }
+
+    private static boolean isCobblemonBall(Identifier itemId) {
+        return itemId != null
+                && "cobblemon".equals(itemId.getNamespace())
+                && itemId.getPath().endsWith("_ball");
     }
 }
