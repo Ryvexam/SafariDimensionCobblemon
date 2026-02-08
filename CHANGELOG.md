@@ -1,11 +1,15 @@
 # Changelog
 
+## 0.0.14
+- **Handshake Rework:** Moved Safari client/server version validation to the configuration phase with server request/client response flow for more reliable joins.
+- **Connectivity:** Increased handshake timeout to 30s and replaced false "mod required" timeout disconnects with a clearer timeout message.
+- **Shiny Parity:** Safari wild Pokemon now follow Cobblemon's global `shinyRate` configuration, keeping Safari odds aligned with server-wide shiny settings.
+
 ## 0.0.13
 - **Fix:** Server crash resolved by separating client and server handshake code properly.
 - **Spawn Pools:** Added extensive water Pokémon to all rarity tiers (Common: Tentacool, Horsea, Goldeen, Remoraid; Uncommon: Seadra, Tentacruel, Mantine, Octillery, Seaking; Rare: Kingdra, Lapras, Sharpedo, Wailmer, Crawdaunt; Ultra-Rare: Wailord, Cloyster, Slowking, Poliwrath, Dewgong, Starmie).
 - **Fix:** Corrected spawn pool entries for huntail, gorebyss, and relicanth (were incorrectly set to "milotic").
 - **Balance:** Removed legendary Pokémon (Kyogre, Lugia, Manaphy) from ultra-rare pool, replaced with non-legendary water types.
-- **Fix:** Fishing rods now work properly in Safari dimension (fixed UseItemCallback blocking them).
 - **Maintenance:** Updated Cobblemon Economy dependency to 0.0.14.
 
 ## 0.0.12
