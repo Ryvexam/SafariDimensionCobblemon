@@ -48,6 +48,7 @@
   "message.safari.internal_error": "Erreur interne : %s",
   "message.safari.ball_missing": "Attention : Safari Ball configuree (%s) introuvable. Utilisation des Poke Balls.",
   "message.safari.handshake_missing": "Mod Safari requis (version serveur : %s).",
+  "message.safari.handshake_timeout": "Le handshake Safari a expire (version serveur : %s). Reconnectez-vous.",
   "message.safari.handshake_mismatch": "Version du mod Safari incompatible. Serveur : %s, Client : %s.",
   "message.safari.capture_success": "Pokemon capture !",
   "message.safari.capture_fail": "Il s'est echappe !",

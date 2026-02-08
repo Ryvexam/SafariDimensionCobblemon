@@ -2,61 +2,79 @@ package com.safari.network;
 
 import com.safari.SafariMod;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.FabricServerConfigurationNetworkHandler;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.network.ServerConfigurationNetworkHandler;
+import net.minecraft.server.network.ServerPlayerConfigurationTask;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 public final class SafariHandshake {
-    public static final CustomPayload.Id<VersionPayload> VERSION_ID = new CustomPayload.Id<>(
-            Identifier.of(SafariMod.MOD_ID, "version")
+    public static final CustomPayload.Id<VersionRequestPayload> VERSION_REQUEST_ID = new CustomPayload.Id<>(
+            Identifier.of(SafariMod.MOD_ID, "version_request")
     );
-    private static final int TIMEOUT_TICKS = 100;
+    public static final CustomPayload.Id<VersionResponsePayload> VERSION_RESPONSE_ID = new CustomPayload.Id<>(
+            Identifier.of(SafariMod.MOD_ID, "version_response")
+    );
+    private static final int TIMEOUT_TICKS = 600;
     private static final int MAX_VERSION_LENGTH = 64;
-    private static final Map<UUID, Integer> pending = new ConcurrentHashMap<>();
+    private static final ServerPlayerConfigurationTask.Key HANDSHAKE_TASK_KEY =
+            new ServerPlayerConfigurationTask.Key(Identifier.of(SafariMod.MOD_ID, "version_handshake").toString());
+    private static final Map<ServerConfigurationNetworkHandler, Integer> pending = new ConcurrentHashMap<>();
 
     private SafariHandshake() {
     }
 
     public static void initServer() {
-        PayloadTypeRegistry.playC2S().register(VERSION_ID, VersionPayload.CODEC);
-        ServerPlayNetworking.registerGlobalReceiver(VERSION_ID, (payload, context) ->
-                context.server().execute(() -> handleVersion(context.player(), payload.version()))
+        PayloadTypeRegistry.configurationS2C().register(VERSION_REQUEST_ID, VersionRequestPayload.CODEC);
+        PayloadTypeRegistry.configurationC2S().register(VERSION_RESPONSE_ID, VersionResponsePayload.CODEC);
+
+        ServerConfigurationNetworking.registerGlobalReceiver(VERSION_RESPONSE_ID, (payload, context) ->
+                context.server().execute(() -> handleVersionResponse(context.networkHandler(), payload.version()))
         );
 
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) ->
-                pending.put(handler.getPlayer().getUuid(), server.getTicks())
-        );
+        ServerConfigurationConnectionEvents.CONFIGURE.register((handler, server) -> {
+            String serverVersion = getModVersion();
+            if (!ServerConfigurationNetworking.canSend(handler, VERSION_REQUEST_ID)) {
+                handler.disconnect(Text.translatable("message.safari.handshake_missing", serverVersion));
+                return;
+            }
 
-        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) ->
-                pending.remove(handler.getPlayer().getUuid())
-        );
+            pending.put(handler, server.getTicks());
+            ((FabricServerConfigurationNetworkHandler) handler).addTask(new VersionHandshakeTask(serverVersion));
+        });
+
+        ServerConfigurationConnectionEvents.DISCONNECT.register((handler, server) -> pending.remove(handler));
 
         ServerTickEvents.END_SERVER_TICK.register(SafariHandshake::tickServer);
     }
 
-    private static void handleVersion(ServerPlayerEntity player, String clientVersion) {
+    private static void handleVersionResponse(ServerConfigurationNetworkHandler handler, String clientVersion) {
         String serverVersion = getModVersion();
-        pending.remove(player.getUuid());
+        pending.remove(handler);
         if (clientVersion == null || clientVersion.isBlank()) {
-            player.networkHandler.disconnect(Text.translatable("message.safari.handshake_missing", serverVersion));
+            handler.disconnect(Text.translatable("message.safari.handshake_missing", serverVersion));
             return;
         }
         if (!serverVersion.equals(clientVersion)) {
-            player.networkHandler.disconnect(Text.translatable("message.safari.handshake_mismatch", serverVersion, clientVersion));
+            handler.disconnect(Text.translatable("message.safari.handshake_mismatch", serverVersion, clientVersion));
+            return;
         }
+
+        ((FabricServerConfigurationNetworkHandler) handler).completeTask(HANDSHAKE_TASK_KEY);
     }
 
     private static void tickServer(MinecraftServer server) {
@@ -64,14 +82,11 @@ public final class SafariHandshake {
             return;
         }
         int tick = server.getTicks();
-        for (Map.Entry<UUID, Integer> entry : pending.entrySet()) {
+        for (Map.Entry<ServerConfigurationNetworkHandler, Integer> entry : pending.entrySet()) {
             if (tick - entry.getValue() < TIMEOUT_TICKS) {
                 continue;
             }
-            ServerPlayerEntity player = server.getPlayerManager().getPlayer(entry.getKey());
-            if (player != null) {
-                player.networkHandler.disconnect(Text.translatable("message.safari.handshake_missing", getModVersion()));
-            }
+            entry.getKey().disconnect(Text.translatable("message.safari.handshake_timeout", getModVersion()));
             pending.remove(entry.getKey());
         }
     }
@@ -83,16 +98,41 @@ public final class SafariHandshake {
                 .orElse("unknown");
     }
 
-    public record VersionPayload(String version) implements CustomPayload {
-        public static final PacketCodec<RegistryByteBuf, VersionPayload> CODEC = PacketCodec.tuple(
+    private record VersionHandshakeTask(String serverVersion) implements ServerPlayerConfigurationTask {
+        @Override
+        public void sendPacket(Consumer<Packet<?>> sender) {
+            sender.accept(ServerConfigurationNetworking.createS2CPacket(new VersionRequestPayload(serverVersion)));
+        }
+
+        @Override
+        public Key getKey() {
+            return HANDSHAKE_TASK_KEY;
+        }
+    }
+
+    public record VersionRequestPayload(String serverVersion) implements CustomPayload {
+        public static final PacketCodec<PacketByteBuf, VersionRequestPayload> CODEC = PacketCodec.tuple(
                 PacketCodecs.string(MAX_VERSION_LENGTH),
-                VersionPayload::version,
-                VersionPayload::new
+                VersionRequestPayload::serverVersion,
+                VersionRequestPayload::new
         );
 
         @Override
         public Id<? extends CustomPayload> getId() {
-            return VERSION_ID;
+            return VERSION_REQUEST_ID;
+        }
+    }
+
+    public record VersionResponsePayload(String version) implements CustomPayload {
+        public static final PacketCodec<PacketByteBuf, VersionResponsePayload> CODEC = PacketCodec.tuple(
+                PacketCodecs.string(MAX_VERSION_LENGTH),
+                VersionResponsePayload::version,
+                VersionResponsePayload::new
+        );
+
+        @Override
+        public Id<? extends CustomPayload> getId() {
+            return VERSION_RESPONSE_ID;
         }
     }
 }
