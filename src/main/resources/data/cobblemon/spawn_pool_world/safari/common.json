@@ -1228,6 +1228,62 @@
                     "safari:safari_biome"
                 ]
             }
+        },
+        {
+            "id": "tentacool-fishing-1",
+            "pokemon": "tentacool",
+            "type": "pokemon",
+            "context": "fishing",
+            "bucket": "common",
+            "level": "1-1",
+            "weight": 8.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "horsea-fishing-1",
+            "pokemon": "horsea",
+            "type": "pokemon",
+            "context": "fishing",
+            "bucket": "common",
+            "level": "1-1",
+            "weight": 7.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "goldeen-fishing-1",
+            "pokemon": "goldeen",
+            "type": "pokemon",
+            "context": "fishing",
+            "bucket": "common",
+            "level": "1-1",
+            "weight": 7.0,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
+        },
+        {
+            "id": "remoraid-fishing-1",
+            "pokemon": "remoraid",
+            "type": "pokemon",
+            "context": "fishing",
+            "bucket": "common",
+            "level": "1-1",
+            "weight": 6.5,
+            "condition": {
+                "biomes": [
+                    "safari:safari_biome"
+                ]
+            }
         }
     ]
 }

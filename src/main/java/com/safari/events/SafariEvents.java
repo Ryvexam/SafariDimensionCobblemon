@@ -1,6 +1,7 @@
 package com.safari.events;
 
 import com.safari.block.SafariBlocks;
+import com.cobblemon.mod.common.Cobblemon;
 import com.safari.config.SafariConfig;
 import com.safari.session.SafariSessionManager;
 import com.safari.world.SafariDimension;
@@ -77,6 +78,10 @@ public class SafariEvents {
                                 int level = min + world.random.nextInt(max - min + 1);
                                 pokemonEntity.getPokemon().setLevel(level);
                                 pokemonEntity.addCommandTag("safari_level_set");
+                            }
+                            if (!pokemonEntity.getCommandTags().contains("safari_shiny_checked")) {
+                                applySafariShinyRate(pokemonEntity, world.random);
+                                pokemonEntity.addCommandTag("safari_shiny_checked");
                             }
                         }
                     }
@@ -300,5 +305,23 @@ public class SafariEvents {
         return itemId != null
                 && "cobblemon".equals(itemId.getNamespace())
                 && itemId.getPath().endsWith("_ball");
+    }
+
+    private static void applySafariShinyRate(PokemonEntity pokemonEntity, net.minecraft.util.math.random.Random random) {
+        var pokemon = pokemonEntity.getPokemon();
+        if (pokemon.getShiny()) {
+            return;
+        }
+
+        float configuredRate = Cobblemon.INSTANCE.getConfig().getShinyRate();
+        if (configuredRate <= 0.0f) {
+            return;
+        }
+
+        float chance = configuredRate > 1.0f ? (1.0f / configuredRate) : configuredRate;
+        if (chance > 0.0f && random.nextFloat() < chance) {
+            pokemon.setShiny(true);
+            pokemon.updateAspects();
+        }
     }
 }
